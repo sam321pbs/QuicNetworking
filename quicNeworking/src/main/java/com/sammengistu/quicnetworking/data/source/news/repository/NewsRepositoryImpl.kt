@@ -16,7 +16,7 @@ class NewsRepositoryImpl @Inject constructor(
         return withContext(ioDispatcher) {
             when (val result = remoteDataSource.getTopNews(country, pageSize)) {
                 is Result.Success -> Result.Success(result.data)
-                is Result.Error -> result
+                is Result.Error -> Result.Error(result.exception)
             }
         }
     }

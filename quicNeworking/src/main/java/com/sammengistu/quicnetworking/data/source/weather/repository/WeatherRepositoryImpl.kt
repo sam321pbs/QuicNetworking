@@ -16,7 +16,7 @@ class WeatherRepositoryImpl @Inject constructor(
         return withContext(ioDispatcher) {
             when(val result = remoteDataSource.getCurrentWeather(lat, long, unit)) {
                 is Result.Success -> Result.Success(result.data)
-                is Result.Error -> result
+                is Result.Error -> Result.Error(result.exception)
             }
         }
     }

@@ -59,6 +59,7 @@ class NewsRemoteDataSourceTests {
         val output = dataSource.getTopNews("", "")
 
         assert(output is Result.Error)
+        assert((output as Result.Error).exception is IllegalArgumentException)
     }
 
     @Test
@@ -66,6 +67,7 @@ class NewsRemoteDataSourceTests {
         val output = dataSource.getTopNews("", PAGE_MAX)
 
         assert(output is Result.Error)
+        assert((output as Result.Error).exception is IllegalArgumentException)
     }
 
     @Test
@@ -73,5 +75,6 @@ class NewsRemoteDataSourceTests {
         val output = dataSource.getTopNews(US, "")
 
         assert(output is Result.Error)
+        assert((output as Result.Error).exception is IllegalArgumentException)
     }
 }

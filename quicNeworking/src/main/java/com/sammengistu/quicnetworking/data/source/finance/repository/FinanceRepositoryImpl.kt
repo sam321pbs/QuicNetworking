@@ -16,7 +16,7 @@ class FinanceRepositoryImpl @Inject constructor(
         return withContext(ioDispatcher) {
             when (val result = remoteDataSource.getMarketSummary(lang, region)) {
                 is Result.Success -> Result.Success(result.data)
-                is Result.Error -> result
+                is Result.Error -> Result.Error(result.exception)
             }
         }
     }

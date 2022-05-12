@@ -45,23 +45,25 @@ class WeatherRepositoryTest {
 
     @Test
     fun `getCurrentWeather returns data with invalid lat`() = runBlocking {
-        val result = Result.Error(Exception())
+        val result = Result.Error(IllegalArgumentException())
 
         `when`(dataSource.getCurrentWeather("", LONG, UNIT)).thenReturn(result)
 
         val output = repo.getCurrentWeather("", LONG, UNIT)
 
         assert(output is Result.Error)
+        assert((output as Result.Error).exception is IllegalArgumentException)
     }
 
     @Test
     fun `getCurrentWeather returns data with invalid long`() = runBlocking {
-        val result = Result.Error(Exception())
+        val result = Result.Error(IllegalArgumentException())
 
         `when`(dataSource.getCurrentWeather(LAT, "", UNIT)).thenReturn(result)
 
         val output = repo.getCurrentWeather(LAT, "", UNIT)
 
         assert(output is Result.Error)
+        assert((output as Result.Error).exception is IllegalArgumentException)
     }
 }

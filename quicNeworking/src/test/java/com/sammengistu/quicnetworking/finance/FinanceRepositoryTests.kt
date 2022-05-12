@@ -14,6 +14,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 
 class FinanceRepositoryTests {
 
@@ -29,7 +30,7 @@ class FinanceRepositoryTests {
     fun `getMarketSummary returns data with valid input`() = runBlocking {
         val result = Result.Success(FinanceTestConstants.fakeFinance)
 
-        Mockito.`when`(dataSource.getMarketSummary(LANG_EN, US))
+        `when`(dataSource.getMarketSummary(LANG_EN, US))
             .thenReturn(result)
 
         val output = repo.getMarketSummary(LANG_EN, US)
@@ -44,25 +45,27 @@ class FinanceRepositoryTests {
 
     @Test
     fun `getMarketSummary returns data with invalid lang`() = runBlocking {
-        val result = Result.Error(Exception())
+        val result = Result.Error(IllegalArgumentException())
 
-        Mockito.`when`(dataSource.getMarketSummary("", US))
+        `when`(dataSource.getMarketSummary("", US))
             .thenReturn(result)
 
         val output = repo.getMarketSummary("", US)
 
         assert(output is Result.Error)
+        assert((output as Result.Error).exception is IllegalArgumentException)
     }
 
     @Test
     fun `getMarketSummary returns data with invalid region`() = runBlocking {
-        val result = Result.Error(Exception())
+        val result = Result.Error(IllegalArgumentException())
 
-        Mockito.`when`(dataSource.getMarketSummary(LANG_EN, ""))
+        `when`(dataSource.getMarketSummary(LANG_EN, ""))
             .thenReturn(result)
 
         val output = repo.getMarketSummary(LANG_EN, "")
 
         assert(output is Result.Error)
+        assert((output as Result.Error).exception is IllegalArgumentException)
     }
 }

@@ -63,6 +63,7 @@ class WeatherRemoteDataSourceTests {
         val output = dataSource.getCurrentWeather("", "", UNIT)
 
         assert(output is Result.Error)
+        assert((output as Result.Error).exception is IllegalArgumentException)
     }
 
     @Test
@@ -70,6 +71,7 @@ class WeatherRemoteDataSourceTests {
         val output = dataSource.getCurrentWeather("", LONG, UNIT)
 
         assert(output is Result.Error)
+        assert((output as Result.Error).exception is IllegalArgumentException)
     }
 
     @Test
@@ -77,5 +79,6 @@ class WeatherRemoteDataSourceTests {
         val output = dataSource.getCurrentWeather(LAT, "", UNIT)
 
         assert(output is Result.Error)
+        assert((output as Result.Error).exception is IllegalArgumentException)
     }
 }

@@ -58,6 +58,7 @@ class FinanceDataSourceTests {
         val output = dataSource.getMarketSummary("", "")
 
         assert(output is Result.Error)
+        assert((output as Result.Error).exception is IllegalArgumentException)
     }
 
     @Test
@@ -65,6 +66,7 @@ class FinanceDataSourceTests {
         val output = dataSource.getMarketSummary("", US)
 
         assert(output is Result.Error)
+        assert((output as Result.Error).exception is IllegalArgumentException)
     }
 
     @Test
@@ -72,5 +74,6 @@ class FinanceDataSourceTests {
         val output = dataSource.getMarketSummary(LANG_EN, "")
 
         assert(output is Result.Error)
+        assert((output as Result.Error).exception is IllegalArgumentException)
     }
 }

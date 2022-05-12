@@ -43,23 +43,25 @@ class NewsRepositoryTest {
 
     @Test
     fun `getTopNews returns data with invalid page size`() = runBlocking {
-        val result = Result.Error(Exception())
+        val result = Result.Error(IllegalArgumentException())
 
         `when`(dataSource.getTopNews(NewsConstants.Country.US, "")).thenReturn(result)
 
         val output = repo.getTopNews(NewsConstants.Country.US, "")
 
         assert(output is Result.Error)
+        assert((output as Result.Error).exception is IllegalArgumentException)
     }
 
     @Test
     fun `getTopNews returns data with invalid country`() = runBlocking {
-        val result = Result.Error(Exception())
+        val result = Result.Error(IllegalArgumentException())
 
         `when`(dataSource.getTopNews("", NewsConstants.Size.PAGE_MAX)).thenReturn(result)
 
         val output = repo.getTopNews("", NewsConstants.Size.PAGE_MAX)
 
         assert(output is Result.Error)
+        assert((output as Result.Error).exception is IllegalArgumentException)
     }
 }
